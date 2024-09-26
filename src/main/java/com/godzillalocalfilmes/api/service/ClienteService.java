@@ -27,6 +27,10 @@ public class ClienteService {
         return clienteRepository.findByEmail(email);
     }
 
+    public Optional<Cliente> buscarPorId(Long id) {
+        return clienteRepository.findById(id);
+    }
+
     public boolean verificarSenha(String senhaEntrada, String senhaHash) {
         return passwordEncoder.matches(senhaEntrada, senhaHash);
     }

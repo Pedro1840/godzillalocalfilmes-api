@@ -8,7 +8,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private final String JWT_SECRET = "seuSegredoJWT";
+    private final String JWT_SECRET = "a5DesafioApiRest";
     private final long JWT_EXPIRATION = 604800000L; // 7 dias
 
     @SuppressWarnings("deprecation")
