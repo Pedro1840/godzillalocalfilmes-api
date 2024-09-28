@@ -1,11 +1,13 @@
 package com.godzillalocalfilmes.api.controller;
 
-import com.godzillalocalfilmes.api.model.Aluguel;
 import com.godzillalocalfilmes.api.model.Cliente;
 import com.godzillalocalfilmes.api.service.AluguelService;
 import com.godzillalocalfilmes.api.service.ClienteService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @RestController
 @RequestMapping("/godzilla")
@@ -21,11 +23,20 @@ public class AluguelController {
 
     @PostMapping
     public ResponseEntity<?> alugarFilme(@RequestParam Long clienteId, @RequestParam Long filmeId) {
-        Cliente cliente = clienteService.buscarPorId(clienteId)
+        // Obtém o usuário autenticado
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String authenticatedEmail = authentication.getName();
+
+        Cliente authenticatedCliente = clienteService.buscarPorEmail(authenticatedEmail)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado."));
+
+        // Verifica se o clienteId passado corresponde ao cliente autenticado
+        if (!authenticatedCliente.getId().equals(clienteId)) {
+            return ResponseEntity.status(403).body("Aluguel negado: cliente não corresponde ao usuário autenticado.");
+        }
         try {
-            Aluguel aluguel = aluguelService.alugarFilme(cliente, filmeId);
-            return ResponseEntity.ok(aluguel);
+            aluguelService.alugarFilme(authenticatedCliente, filmeId);
+            return ResponseEntity.ok().body("Filme alugado com sucesso!");
         } catch (Exception e) {
             return ResponseEntity.status(403).body(e.getMessage());
         }
@@ -33,10 +44,20 @@ public class AluguelController {
 
     @PostMapping("/devolver")
     public ResponseEntity<String> devolverFilme(@RequestParam Long clienteId) {
-        Cliente cliente = clienteService.buscarPorId(clienteId)
+        // Obtém o usuário autenticado
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String authenticatedEmail = authentication.getName();
+
+        Cliente authenticatedCliente = clienteService.buscarPorEmail(authenticatedEmail)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado."));
+
+        // Verifica se o clienteId passado corresponde ao cliente autenticado
+        if (!authenticatedCliente.getId().equals(clienteId)) {
+            return ResponseEntity.status(403).body("Devolução negada: cliente não corresponde ao usuário autenticado.");
+        }
+
         try {
-            aluguelService.devolverFilme(cliente);
+            aluguelService.devolverFilme(authenticatedCliente);
             return ResponseEntity.ok("Filme devolvido com sucesso.");
         } catch (Exception e) {
             return ResponseEntity.status(403).body(e.getMessage());

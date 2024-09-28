@@ -35,7 +35,7 @@ public class ClienteController {
         }
 
         // Atribui a role USER por padrão
-        cliente.getRoles().add(new Role(1L, "ROLE_USER"));
+        cliente.getRoles().add(new Role(2L, "ROLE_USER"));
 
         clienteService.registrarCliente(cliente);
         return ResponseEntity.ok("Cliente registrado com sucesso!");
