@@ -1,5 +1,8 @@
 # Documentação da API do Godzilla Local Filmes
 
+>[!IMPORTANT]
+>Disponibizei um arquivo pdf com o nome '**respostas_teste dev_java.pdf**' com as atividades restantes referente ao teste que me passaram.
+
 Bem-vindo à documentação da API do Godzilla Local Filmes.
 
 Esta API é um aplicativo Spring Boot criado com Java 17, projetado para gerenciar um serviço local de aluguel de filmes.
@@ -15,7 +18,7 @@ Antes de executar o aplicativo, certifique-se de ter o seguinte instalado em seu
 
 - Java Development Kit (JDK) 17: Baixe o JDK 17
 - PostgreSQL
-- Apache Maven: Baixe o Maven
+- Maven
 - Um IDE (por exemplo, IntelliJ IDEA, Eclipse) ou um editor de texto para edição de código.
 
 - Postman ou qualquer outra ferramenta de teste de API (opcional, mas recomendado).
@@ -348,12 +351,20 @@ curl -X POST http://localhost:8080/usuarios/usuario \
 #### 5.4. Listar todos filmes
 
 ```bash
-curl -X POST http://localhost:8080/usuarios/usuario \
+curl -X POST http://localhost:8080/localdora/godzilla/todos \
 -H "Content-Type: application/json" \
 -d '{"email":"john@example.com", "senha":"password123"}'
 ```
 
-#### 5.5. Alugar um Filme
+#### 5.5. Listar Filmes de acordo com o parametro passado
+
+```bash
+curl -X POST http://localhost:8080/localdora/godzilla?titulo= \
+-H "Content-Type: application/json" \
+-d '{"email":"john@example.com", "senha":"password123"}'
+```
+
+#### 5.6. Alugar um Filme
 
 ```bash
 curl -X POST http://localhost:8080/godzilla \
@@ -361,13 +372,34 @@ curl -X POST http://localhost:8080/godzilla \
 -d "clienteId=1&filmeId=2"
 ```
 
-#### 5.6. Devolver o Filme alugado
+#### 5.7. Devolver o Filme alugado
 
 ```bash
 curl -X POST http://localhost:8080/godzilla/devolver \
 -H "Authorization: Bearer {jwt-token}" \
 -d "clienteId=1"
 ```
+
+### 5.8 Deletar Cliente
+
+```bash
+curl -X POST http://localhost:8080/localdora/godzilla/{id} \
+-H "Authorization: Bearer {jwt-token-admin}" \
+```
+
+### 5.9 Atribuir Privilegio / Remover Privilegio a um cliente
+
+```bash
+curl -X POST http://localhost:8080/admin/clientes/atribuir-role?clienteId=2&role=ROLE_USER \
+-H "Authorization: Bearer {jwt-token-admin}" \
+```
+
+```bash
+curl -X POST http://localhost:8080/admin/clientes/remover-role?clienteId=2&role=ROLE_ADMIN \
+-H "Authorization: Bearer {jwt-token-admin}" \
+```
+
+- Opções criados automaticamente são (ROLE_USER, ROLE_ADMIN)
 
 ## 6. Conclusão
 
