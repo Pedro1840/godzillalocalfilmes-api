@@ -1,7 +1,7 @@
 # Documentação da API do Godzilla Local Filmes
 
 >[!IMPORTANT]
->Disponibizei um arquivo pdf com o nome '**respostas_teste dev_java.pdf**' com as atividades restantes referente ao teste que me passaram.
+>Disponibizei um arquivo pdf com o nome '**respostas_teste_dev_java.pdf**' na raiz do projeto, com as respostas das atividades restantes referente ao teste que me passaram (Disponibilizei também o pdf do teste que me passaram).
 
 Bem-vindo à documentação da API do Godzilla Local Filmes.
 
