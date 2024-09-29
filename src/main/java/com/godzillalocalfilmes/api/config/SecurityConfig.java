@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         // Rotas públicas
                         .requestMatchers("/usuarios/**").permitAll()
-                        .requestMatchers("/locadora/godzilla/**").permitAll()
+                        .requestMatchers("/localdora/godzilla/**").permitAll()
 
                         // Rotas protegidas por role
                         .requestMatchers("/admin/**").hasRole("ADMIN")
