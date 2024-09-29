@@ -48,7 +48,7 @@ public class DataInitializer {
                 admin.setNome("Admin Godzilla");
                 admin.setEmail("admin@godzilla.com");
                 admin.setSenha(passwordEncoder.encode("admin123")); // Altere a senha conforme necessário
-                admin.setRoles(Set.of(userRole));
+                admin.setRoles(Set.of(adminRole));
                 clienteRepository.save(admin);
                 System.out.println("Usuário administrador criado: admin@godzilla.com / admin123");
             }
